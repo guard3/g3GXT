@@ -13,7 +13,7 @@ int main(int argc, const char* argv[])
 		std::cout
 			<< "g3GXT - a simple GXT builder for GTAIII - by guard3" << std::endl
 			<< "Usage: g3GXT [path_to_language_text_file]";
-		return 0;
+return 0;
 	}
 	if (argc > 2)
 	{
@@ -111,12 +111,20 @@ int main(int argc, const char* argv[])
 			std::string label = "";
 			for (wchar_t& wc : line)
 			{
-				if (iswascii(wc)) label += wc;
+				//if (iswascii(wc)) label += wc;
+				if (!((wc >= 'A' && wc <= 'Z') || (wc >= 'a' && wc <= 'z') || iswdigit(wc) || wc == L'_'))
+				{
+					std::cout << "Error in line " << i << ". Label must contain capital latin characters, numbers or underscores only.";
+					return 1;
+				}
+				else label += toupper(wc);
+				/*
 				else
 				{
 					std::cout << "Error in line " << i << ". Label must contain only ASCII characters.\nCompilation failed.";
 					return 1;
 				}
+				*/
 			}
 			
 			entries.push_back(entry);
