@@ -132,6 +132,7 @@ int wmain(int argc, const wchar** argv)
 		// Parse the file to remove comments
 		std::wstringstream missionTextStream;
 		unsigned long long lineCounter = 1;
+		unsigned long long lastCommentLine;
 		wchar wc;
 		bool isComment = false;
 		while (missionTextFile.get(wc))
@@ -154,14 +155,19 @@ int wmain(int argc, const wchar** argv)
 						ErrorBox("%s: Error in line %i\nUnexpected '}' character", missionNames[i].c_str(), lineCounter);
 						return 0;
 					}
-					if (wc == L'{') isComment = true;
-					else missionTextStream << wc;
+					if (wc == L'{')
+					{
+						isComment = true;
+						lastCommentLine = lineCounter;
+					}
+					else
+						missionTextStream << wc;
 				}
 			}
 		}
 		if (isComment)
 		{
-			ErrorBox("%s: Error in line %i\nIncomplete comment.", missionNames[i].c_str(), lineCounter);
+			ErrorBox("%s: Error in line %i\nIncomplete comment.", missionNames[i].c_str(), lastCommentLine);
 			return 0;
 		}
 
