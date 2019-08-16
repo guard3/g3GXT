@@ -24,6 +24,7 @@ project "g3GXT_iii"
 	files "g3GXT_iii.cpp"
 
 project "gxttotxt"
+	links "shlwapi"
 	targetname "gxttotxt"
 	files "gxttotxt.cpp"
 	
